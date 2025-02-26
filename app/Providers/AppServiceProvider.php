@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\EmployeeRepository;
+use App\Repositories\Interfaces\EmployeeRepositoryInterface;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(EmployeeRepositoryInterface::class, EmployeeRepository::class);
     }
 
     /**
@@ -19,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Route::middleware('api')
+            ->prefix('api/v1')
+            ->group(base_path('routes/api.php'));
     }
 }
