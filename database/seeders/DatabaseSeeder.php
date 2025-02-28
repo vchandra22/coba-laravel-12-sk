@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +15,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $faker = Faker::create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        for ($i = 0; $i < 8000; $i++) {
+            $user = User::create([
+                'name' => $faker->name,
+                'email' => $faker->unique()->safeEmail,
+                'password' => bcrypt('password'),
+            ]);
+
+            Employee::create([
+                'user_id' => $user->id,
+                'phone' => $faker->phoneNumber,
+                'birth_place' => $faker->city,
+                'birth_date' => $faker->date(),
+                'address' => $faker->address,
+                'hire_date' => $faker->date(),
+            ]);
+        }
     }
 }

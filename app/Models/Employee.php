@@ -8,6 +8,7 @@ class Employee extends Model
 {
     protected $table = 'employees';
     protected $fillable = [
+        'user_id',
         'phone',
         'birth_place',
         'birth_date',
@@ -15,4 +16,8 @@ class Employee extends Model
         'hire_date'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

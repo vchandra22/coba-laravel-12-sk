@@ -7,12 +7,12 @@ use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 class EmployeeRepository implements EmployeeRepositoryInterface {
     public function getAll()
     {
-        return Employee::all();
+        return Employee::with('user')->get();
     }
 
     public function getById($id)
     {
-        return Employee::findOrFail($id);
+        return Employee::with('user')->findOrFail($id);
     }
 
     public function create(array $data)
